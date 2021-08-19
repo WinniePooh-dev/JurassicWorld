@@ -6,8 +6,8 @@ const {errorColor, thirdColor} = Colors;
 
 export const StyledLinearProgress = styled(LinearProgress)`
   position: sticky;
-  top: 72px;
-  height: 10px;
+  top: 170px;
+  height: 8px;
   background: ${thirdColor};
   .MuiLinearProgress-bar {
     background-color: ${errorColor};

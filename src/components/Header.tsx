@@ -1,20 +1,23 @@
 import {rgba} from 'polished';
 import React, {Fragment} from 'react';
+import {useSelector} from 'react-redux';
 import styled from 'styled-components';
 import {StyledLinearProgress} from '../@UI';
 import {Colors} from '../GlobalStyle';
+import {selectLoading} from '../selectors/ui';
 import {Timer} from './Timer';
 
 const {mainColor, titleColor} = Colors;
 
 export const Header = (): JSX.Element => {
+  const loading = useSelector(selectLoading);
   return (
     <Fragment>
       <StyledHeader>
         <Timer />
         <Title>Jurassic world*</Title>
       </StyledHeader>
-      <StyledLinearProgress />
+      {loading ? <StyledLinearProgress /> : null}
     </Fragment>
   );
 };
@@ -36,7 +39,7 @@ export const StyledHeader = styled.header`
 `;
 
 const Title = styled.span`
-  @media screen and (max-width: 1400px) {
+  @media screen and (max-width: 1440px) {
     display: none;
   }
 `;

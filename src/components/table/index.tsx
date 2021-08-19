@@ -1,7 +1,18 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
+import {selectUser} from '../../selectors/user';
+import {selectUsers} from '../../selectors/users';
 import {Table, TBody, TH, Thead, TR} from './styles';
 
-const JurassicTable = (): JSX.Element => {
+const JurassicTable = (): JSX.Element | null => {
+  const users = useSelector(selectUsers);
+  const user = useSelector(selectUser);
+  const headers = Object.keys(user);
+
+  if (!users.length) {
+    return null;
+  }
+
   return (
     <Table>
       <Thead>
@@ -17,5 +28,3 @@ const JurassicTable = (): JSX.Element => {
 };
 
 export default JurassicTable;
-
-const headers = ['name', 'age', 'gender', 'time'];

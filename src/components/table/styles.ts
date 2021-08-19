@@ -7,10 +7,10 @@ export const Table = styled.table`
   border: 0px;
   margin: 0 auto;
   border-collapse: collapse;
-  font-family: 'Roboto', 'Oxygen', 'Ubuntu', cursive;
+  font-family: Roboto, Oxygen, Ubuntu, cursive;
   font-size: 2rem;
 
-  @media screen and (max-width: 1400px) {
+  @media screen and (max-width: 1440px) {
     width: 100%;
   }
 `;

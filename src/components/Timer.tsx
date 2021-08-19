@@ -17,7 +17,7 @@ const StyledTimer = styled.span``;
 
 const FormatTimer = styled.span`
   cursor: help;
-  font-family: 'Roboto', 'Oxygen', 'Ubuntu', cursive;
+  font-family: Roboto, Oxygen, Ubuntu, cursive;
   font-size: 3rem;
   font-weight: bold;
 `;
