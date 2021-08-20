@@ -1,7 +1,8 @@
 import React, {SVGProps} from 'react';
 import {Icon} from '../../@UI';
+import {StyledCard} from './styles';
 
-interface ICard {
+export interface ICard {
   id?: number;
   type: string;
   icon: SVGProps<SVGSVGElement>;
@@ -10,5 +11,9 @@ interface ICard {
 }
 
 export const Card = ({type, icon, color, size}: ICard): JSX.Element => {
-  return <Icon svg={icon} width={size} color={color} />;
+  return (
+    <StyledCard>
+      <Icon svg={icon} width={size} color={color} />
+    </StyledCard>
+  );
 };

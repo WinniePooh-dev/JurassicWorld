@@ -1,6 +1,7 @@
 import React, {Fragment, lazy} from 'react';
 import {Suspense} from 'react';
 import {Route, Switch} from 'react-router';
+import styled from 'styled-components';
 import {Center, Content, StyledCircularProgress} from './@UI';
 import {Header} from './components/Header';
 import {default as Table} from './components/Table';
@@ -13,7 +14,7 @@ const Game = lazy(() => import('./components/Game'));
 
 export const App = (): JSX.Element => {
   return (
-    <Fragment>
+    <Main>
       <Header />
       <Table />
       <Content>
@@ -30,6 +31,12 @@ export const App = (): JSX.Element => {
           </Switch>
         </Suspense>
       </Content>
-    </Fragment>
+    </Main>
   );
 };
+
+const Main = styled.main`
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+`;

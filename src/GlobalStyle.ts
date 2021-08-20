@@ -5,12 +5,12 @@ export const Colors = {
   mainColor: '#2a6686',
   secondColor: '#F8F8F8',
   thirdColor: '#888888',
+  fourthColor: '#C2C6D6',
   foreground: '#FAFAFA',
   background: '#FFFFFF',
   textColor: '#444444',
   errorColor: '#FF6347',
   attentionColor: '#FF4D62',
-  cancelColor: '#C2C6D6',
   cautionColor: '#FFA500',
   successColor: '#34CA00',
   titleColor: '#FFFFF0'

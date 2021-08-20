@@ -37,9 +37,8 @@ const StyledGame = styled(Paper)`
   flex-wrap: wrap;
   width: calc(100% - 3em);
   background-color: ${Colors.background};
-  border-radius: 14px 14px 0 0;
+  border-radius: 14px;
   box-shadow: 0px 10px 32px rgba(0, 0, 0, 0.3);
-  height: auto;
   margin: 3em auto;
 
   @media screen and (max-width: 1440px) {

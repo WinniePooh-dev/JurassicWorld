@@ -24,6 +24,6 @@ const Span = styled.span<{
 export const Icon = (props: Props): JSX.Element => {
   const {svg, ...rest} = props;
   const encoded = (svg as string).replace('data:image/svg+xml;base64,', '');
-  const icon = atob(encoded);
+  const icon = window.atob(encoded);
   return <Span {...rest} dangerouslySetInnerHTML={{__html: icon}} />;
 };
