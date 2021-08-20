@@ -19,11 +19,13 @@ const Game = (): JSX.Element => {
   };
 
   useEffect(() => {
+    let time: NodeJS.Timeout;
     if (timer > 0 && startGame) {
-      setTimeout(() => dispatch(setTimer(timer - 1)), 1000);
+      time = setTimeout(() => dispatch(setTimer(timer - 1)), 1000);
     } else {
       setStopGame(true);
     }
+    return () => clearTimeout(time);
   }, [timer, startGame, stopGame]);
 
   if (startGame) {
