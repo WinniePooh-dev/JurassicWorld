@@ -9,6 +9,7 @@ export const StyledLinearProgress = styled(LinearProgress)`
   top: 170px;
   height: 8px;
   background: ${thirdColor};
+  z-index: 9999;
   .MuiLinearProgress-bar {
     background-color: ${errorColor};
   }

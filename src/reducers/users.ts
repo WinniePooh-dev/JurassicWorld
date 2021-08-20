@@ -1,9 +1,14 @@
 import {User} from './user';
 import {AnyAction} from 'redux';
 
-const initialState: User[] = [];
-
 export const SET_USERS = 'SET_USERS';
+
+const getUsers = (): User[] => {
+  const users = localStorage.getItem(SET_USERS) || [];
+  return users.length ? JSON.parse(users as string) : users;
+};
+
+const initialState: User[] = getUsers();
 
 export default (state = initialState, action: AnyAction): User[] => {
   switch (action.type) {
@@ -15,6 +20,7 @@ export default (state = initialState, action: AnyAction): User[] => {
   }
 };
 
-export const setUsers = (users: User[], user: User): AnyAction => {
-  return {type: SET_USERS, payload: [...users, user]};
+export const setUsers = (users: User[]): AnyAction => {
+  localStorage.setItem(SET_USERS, JSON.stringify(users));
+  return {type: SET_USERS, payload: {users}};
 };

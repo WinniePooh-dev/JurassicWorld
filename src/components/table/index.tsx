@@ -2,7 +2,7 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 import {selectUser} from '../../selectors/user';
 import {selectUsers} from '../../selectors/users';
-import {Table, TBody, TH, Thead, TR} from './styles';
+import {Table, TBody, TD, TH, Thead, TR} from './styles';
 
 const JurassicTable = (): JSX.Element | null => {
   const users = useSelector(selectUsers);
@@ -22,7 +22,19 @@ const JurassicTable = (): JSX.Element | null => {
           ))}
         </TR>
       </Thead>
-      <TBody></TBody>
+      <TBody>
+        {users.map((user, idx) => (
+          <TR key={idx}>
+            {Object.entries(user).map(([key, value]) => {
+              return (
+                <TD key={key} aria-label={key}>
+                  {value}
+                </TD>
+              );
+            })}
+          </TR>
+        ))}
+      </TBody>
     </Table>
   );
 };
