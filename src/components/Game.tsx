@@ -1,17 +1,30 @@
 import {Paper} from '@material-ui/core';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 import {Button} from '../@UI';
 import {Colors} from '../GlobalStyle';
+import {setTimer} from '../reducers/ui';
+import {selectTimer} from '../selectors/ui';
 import {CardList} from './CardList';
 
 const Game = (): JSX.Element => {
+  const dispatch = useDispatch();
+  const timer = useSelector(selectTimer);
   const [startGame, setStartGame] = useState(false);
   const [stopGame, setStopGame] = useState(false);
 
   const onStatrtGame = () => {
     setStartGame(true);
   };
+
+  useEffect(() => {
+    if (timer > 0 && startGame) {
+      setTimeout(() => dispatch(setTimer(timer - 1)), 1000);
+    } else {
+      setStopGame(true);
+    }
+  }, [timer, startGame, stopGame]);
 
   if (startGame) {
     return (

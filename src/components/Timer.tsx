@@ -1,13 +1,16 @@
 import React, {Fragment} from 'react';
+import {useSelector} from 'react-redux';
 import styled from 'styled-components';
 import {JurassicTooltip} from '../@UI';
+import {selectTimer} from '../selectors/ui';
 
 export const Timer = (): JSX.Element => {
+  const timer = useSelector(selectTimer);
   return (
     <Fragment>
-      <StyledTimer>60+</StyledTimer>
+      <StyledTimer>{timer}+</StyledTimer>
       <JurassicTooltip title={'timer'} padding={12} fontSize={2} arrow>
-        <FormatTimer>60</FormatTimer>
+        <FormatTimer>{timer}</FormatTimer>
       </JurassicTooltip>
     </Fragment>
   );
