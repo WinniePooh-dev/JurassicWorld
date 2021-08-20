@@ -1,4 +1,4 @@
-import React, {Fragment, lazy} from 'react';
+import React, {lazy, useEffect} from 'react';
 import {Suspense} from 'react';
 import {Route, Switch} from 'react-router';
 import styled from 'styled-components';
@@ -13,6 +13,8 @@ const UserForm = lazy(() =>
 const Game = lazy(() => import('./components/Game'));
 
 export const App = (): JSX.Element => {
+  // useEffect(() => localStorage.clear(), []);
+
   return (
     <Main>
       <Header />

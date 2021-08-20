@@ -19,7 +19,7 @@ import {INotification} from '../@UI/Notification';
 import {Colors} from '../GlobalStyle';
 import {composeValidators, number, required} from '../lib/validators';
 import {setLoading} from '../reducers/ui';
-import {setUser, User} from '../reducers/user';
+import {Gender, setUser, User} from '../reducers/user';
 
 const {background} = Colors;
 
@@ -31,7 +31,9 @@ export const UserForm = (): JSX.Element => {
   const onSubmit = (data: User): void => {
     try {
       dispatch(setLoading(true));
-      dispatch(setUser(data));
+      dispatch(
+        setUser({...data, gender: (data.gender as unknown as HTMLInputElement).value as Gender})
+      );
       setNotification({
         open: true,
         message: 'Success!',

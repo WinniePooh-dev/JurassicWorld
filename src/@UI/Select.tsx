@@ -13,7 +13,7 @@ export type Option = {
 
 interface SelectProps
   extends FieldProps,
-    FieldRenderProps<string | Option | number, HTMLInputElement> {
+    FieldRenderProps<string | Option | string, HTMLInputElement> {
   options?: Option[];
 }
 

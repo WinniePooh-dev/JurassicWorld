@@ -9,7 +9,7 @@ export interface User {
   name: string;
   age: number;
   gender: Gender;
-  time?: number;
+  time?: number | string;
 }
 
 const initialState: User = {

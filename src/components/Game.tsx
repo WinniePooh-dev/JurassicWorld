@@ -5,12 +5,17 @@ import styled from 'styled-components';
 import {Button} from '../@UI';
 import {Colors} from '../GlobalStyle';
 import {setTimer} from '../reducers/ui';
+import {setUsers} from '../reducers/users';
 import {selectTimer} from '../selectors/ui';
+import {selectUser} from '../selectors/user';
+import {selectUsers} from '../selectors/users';
 import {CardList} from './CardList';
 
 const Game = (): JSX.Element => {
   const dispatch = useDispatch();
   const timer = useSelector(selectTimer);
+  const users = useSelector(selectUsers);
+  const user = useSelector(selectUser);
   const [startGame, setStartGame] = useState(false);
   const [stopGame, setStopGame] = useState(false);
 
@@ -19,14 +24,20 @@ const Game = (): JSX.Element => {
   };
 
   useEffect(() => {
-    let time: NodeJS.Timeout;
+    let timeout: NodeJS.Timeout;
     if (timer > 0 && startGame) {
-      time = setTimeout(() => dispatch(setTimer(timer - 1)), 1000);
-    } else {
+      timeout = setTimeout(() => dispatch(setTimer(timer - 1)), 1000);
+    } else if (timer === 0) {
       setStopGame(true);
     }
-    return () => clearTimeout(time);
+    return () => clearTimeout(timeout);
   }, [timer, startGame, stopGame]);
+
+  useEffect(() => {
+    if (stopGame) {
+      dispatch(setUsers([...users, {...user, ...{time: timer}}]));
+    }
+  }, [stopGame, setStopGame]);
 
   if (startGame) {
     return (
