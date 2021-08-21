@@ -1,5 +1,7 @@
 import {AnyAction} from 'redux';
 
+export const timelimit = 60;
+
 export interface UI {
   loading: boolean;
   timer: number;
@@ -7,7 +9,7 @@ export interface UI {
 
 const initialState: UI = {
   loading: false,
-  timer: 60
+  timer: timelimit
 };
 
 export const SET_LOADING = 'SET_LOADING';
