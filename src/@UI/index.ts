@@ -14,6 +14,7 @@ export * from './StyledCircularProgress';
 export * from './Content';
 export {default as Notification} from './Notification';
 export * from './Icon';
+export * from './StyledDialog';
 
 export interface FieldProps {
   label?: string;

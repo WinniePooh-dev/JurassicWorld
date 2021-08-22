@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import styled from 'styled-components';
-import {Button} from '../@UI';
+import {Button, StyledDialog, StyledTypography} from '../@UI';
 import {Colors} from '../GlobalStyle';
 import {setTimer} from '../reducers/ui';
 import {setUsers} from '../reducers/users';
@@ -22,6 +22,8 @@ const Game = (): JSX.Element => {
   const user = useSelector(selectUser);
   const [startGame, setStartGame] = useState(false);
   const [stopGame, setStopGame] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [modalContent, setModalContent] = useState<string>('');
 
   const onStatrtGame = () => {
     setStartGame(true);
@@ -33,7 +35,10 @@ const Game = (): JSX.Element => {
   };
 
   useEffect(() => {
-    if (!cards.length) onStopGame();
+    if (!cards.length) {
+      onStopGame();
+      handleOpen('You win!');
+    }
   }, [cards]);
 
   useEffect(() => {
@@ -42,6 +47,7 @@ const Game = (): JSX.Element => {
       timeout = setTimeout(() => dispatch(setTimer(timer - 1)), 1000);
     } else if (timer === 0) {
       setStopGame(true);
+      handleOpen('Time is over!');
     }
     return () => clearTimeout(timeout);
   }, [timer, startGame, stopGame]);
@@ -49,15 +55,32 @@ const Game = (): JSX.Element => {
   useEffect(() => {
     if (stopGame) {
       dispatch(setUsers([...users, {...user, ...{time: timer}}]));
-      setTimeout(() => history.push('/user_form'), 3000);
-      window.location.reload();
+      setTimeout(() => {
+        history.push('/user_form');
+        window.location.reload();
+      }, 3500);
     }
   }, [stopGame, setStopGame]);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = (content: string) => {
+    setOpen(true);
+    setModalContent(content);
+    setTimeout(() => setOpen(false), 3000);
+  };
 
   if (startGame) {
     return (
       <StyledGame>
         <CardList />
+        <StyledDialog open={open} onClose={handleClose}>
+          <StyledTypography variant="h3" component="h3">
+            {modalContent}
+          </StyledTypography>
+        </StyledDialog>
       </StyledGame>
     );
   }
@@ -65,6 +88,11 @@ const Game = (): JSX.Element => {
   return (
     <StyledGame>
       <Button onClick={onStatrtGame}>Start the game</Button>
+      <StyledDialog open={open} onClose={handleClose}>
+        <StyledTypography variant="h3" component="h3">
+          {modalContent}
+        </StyledTypography>
+      </StyledDialog>
     </StyledGame>
   );
 };

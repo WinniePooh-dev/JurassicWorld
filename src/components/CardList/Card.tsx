@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {Icon} from '../../@UI';
 import {StyledCard} from './styles';
 import jurassicWorld from '../../assets/icons/jurassic-world.svg';
@@ -6,6 +6,7 @@ import {ICard, setCards, updateCards} from '../../reducers/cards';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectCards, selectOpenedCards} from '../../selectors/cards';
 import {useMemo} from 'react';
+import {setLoading} from '../../reducers/ui';
 
 export enum SideCard {
   Back = 'back',
@@ -18,6 +19,20 @@ export const Card = ({id, icon, color, size}: ICard): JSX.Element => {
   const openedCards = useSelector(selectOpenedCards);
   const [side, setSide] = useState<SideCard>(SideCard.Back);
   const timeout = useRef<NodeJS.Timeout | null>(null);
+
+  const onPristinedCard = useCallback(() => dispatch(setCards(resetCards)), [cards]);
+  const onFilterCards = useCallback(() => {
+    const filteredCards = cards.filter(card => !openedCards.includes(card));
+    dispatch(setCards(filteredCards));
+  }, [cards]);
+
+  const useTimeout = (func: () => void, delay: number) => {
+    dispatch(setLoading(true));
+    setTimeout(() => {
+      func();
+      dispatch(setLoading(false));
+    }, delay);
+  };
 
   const resetCards = useMemo(
     () =>
@@ -38,10 +53,9 @@ export const Card = ({id, icon, color, size}: ICard): JSX.Element => {
     if (!openedCards.length) {
       setSide(SideCard.Back);
     } else if (openedCards.length === 2 && openedCards[0].type === openedCards[1].type) {
-      const filteredCards = cards.filter(card => !openedCards.includes(card));
-      setTimeout(() => dispatch(setCards(filteredCards)), 1500);
+      useTimeout(onFilterCards, 1500);
     } else if (openedCards.length === 2 && openedCards[0].type !== openedCards[1].type) {
-      setTimeout(() => dispatch(setCards(resetCards)), 1500);
+      useTimeout(onPristinedCard, 1500);
     }
   }, [openedCards.length]);
 
