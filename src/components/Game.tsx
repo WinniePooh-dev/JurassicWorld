@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import styled from 'styled-components';
-import {Button, StyledDialog, StyledTypography} from '../@UI';
+import {Button, StyledCloseIcon, StyledDialog, StyledTypography} from '../@UI';
 import {Colors} from '../GlobalStyle';
 import {setTimer} from '../reducers/ui';
 import {setUsers} from '../reducers/users';
@@ -80,6 +80,7 @@ const Game = (): JSX.Element => {
           <StyledTypography variant="h3" component="h3">
             {modalContent}
           </StyledTypography>
+          <StyledCloseIcon onClick={handleClose} />
         </StyledDialog>
       </StyledGame>
     );
@@ -92,6 +93,7 @@ const Game = (): JSX.Element => {
         <StyledTypography variant="h3" component="h3">
           {modalContent}
         </StyledTypography>
+        <StyledCloseIcon onClick={handleClose} />
       </StyledDialog>
     </StyledGame>
   );

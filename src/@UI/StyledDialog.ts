@@ -5,6 +5,10 @@ import {Colors} from '../GlobalStyle';
 import {rgba} from 'polished';
 
 export const StyledDialog = styled(Dialog)<ComponentType<DialogProps>>`
+  & .MuiDialog-root {
+    position: relative;
+  }
+
   & .MuiDialog-paper {
     position: fixed;
     display: flex;
