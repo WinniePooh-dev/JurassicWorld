@@ -1,11 +1,13 @@
 import {Paper} from '@material-ui/core';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import {useHistory} from 'react-router-dom';
 import styled from 'styled-components';
 import {Button} from '../@UI';
 import {Colors} from '../GlobalStyle';
 import {setTimer} from '../reducers/ui';
 import {setUsers} from '../reducers/users';
+import {selectCards} from '../selectors/cards';
 import {selectTimer} from '../selectors/ui';
 import {selectUser} from '../selectors/user';
 import {selectUsers} from '../selectors/users';
@@ -13,8 +15,10 @@ import {CardList} from './CardList';
 
 const Game = (): JSX.Element => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const timer = useSelector(selectTimer);
   const users = useSelector(selectUsers);
+  const cards = useSelector(selectCards);
   const user = useSelector(selectUser);
   const [startGame, setStartGame] = useState(false);
   const [stopGame, setStopGame] = useState(false);
@@ -22,6 +26,15 @@ const Game = (): JSX.Element => {
   const onStatrtGame = () => {
     setStartGame(true);
   };
+
+  const onStopGame = () => {
+    setStopGame(true);
+    setStartGame(false);
+  };
+
+  useEffect(() => {
+    if (!cards.length) onStopGame();
+  }, [cards]);
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
@@ -36,6 +49,8 @@ const Game = (): JSX.Element => {
   useEffect(() => {
     if (stopGame) {
       dispatch(setUsers([...users, {...user, ...{time: timer}}]));
+      setTimeout(() => history.push('/user_form'), 3000);
+      window.location.reload();
     }
   }, [stopGame, setStopGame]);
 

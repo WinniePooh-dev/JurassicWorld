@@ -2,6 +2,7 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 import styled from 'styled-components';
 import {Colors} from '../../GlobalStyle';
+import {timelimit} from '../../reducers/ui';
 import {selectUser} from '../../selectors/user';
 import {selectUsers} from '../../selectors/users';
 import {Table, TBody, TD, TH, Thead, TR} from './styles';
@@ -30,7 +31,13 @@ const JurassicTable = (): JSX.Element | null => {
             {Object.entries(user).map(([key, value]) => {
               return (
                 <TD key={key} aria-label={key}>
-                  {key === 'time' && value === 0 ? <Wasted>lost</Wasted> : value}
+                  {key === 'time' && value === 0 ? (
+                    <Wasted>lost</Wasted>
+                  ) : key === 'time' ? (
+                    timelimit - +value + 'sec'
+                  ) : (
+                    value
+                  )}
                 </TD>
               );
             })}
