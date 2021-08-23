@@ -25,6 +25,7 @@ const StyledTooltip = styled(props => (
     font-size: ${props => props.fontSize}rem;
     letter-spacing: normal;
     border-radius: 1rem;
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.6);
   }
 
   & .arrow {

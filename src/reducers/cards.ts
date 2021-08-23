@@ -14,11 +14,13 @@ import elasmosaurus from '../assets/icons/elasmosaurus.svg';
 import ankylosaurus from '../assets/icons/ankylosaurus.svg';
 import mammoth from '../assets/icons/mammoth.svg';
 
+import uniqueId from '../lib/uniqueId';
+
 const {thirdColor, successColor, attentionColor, cautionColor, errorColor, fourthColor, textColor} =
   Colors;
 
 export interface ICard {
-  id: number;
+  id: string;
   type: string;
   icon: SVGProps<SVGSVGElement>;
   color?: string;
@@ -28,7 +30,7 @@ export interface ICard {
 
 const initialState: ICard[] = [
   {
-    id: 1,
+    id: uniqueId('card-'),
     type: 'velociraptor',
     icon: velociraptor,
     color: darken(0.2, thirdColor),
@@ -36,7 +38,7 @@ const initialState: ICard[] = [
     isOpen: false
   },
   {
-    id: 2,
+    id: uniqueId('card-'),
     type: 'triceratops',
     icon: triceratops,
     color: darken(0.1, successColor),
@@ -44,44 +46,65 @@ const initialState: ICard[] = [
     isOpen: false
   },
   {
-    id: 3,
+    id: uniqueId('card-'),
     type: 'stegosaurus',
     icon: stegosaurus,
     color: darken(0.2, fourthColor),
     size: 320,
     isOpen: false
   },
-  {id: 4, type: 'spinosaurus', icon: spinosaurus, color: errorColor, size: 300, isOpen: false},
   {
-    id: 5,
+    id: uniqueId('card-'),
+    type: 'spinosaurus',
+    icon: spinosaurus,
+    color: errorColor,
+    size: 300,
+    isOpen: false
+  },
+  {
+    id: uniqueId('card-'),
     type: 'diplodocus',
     icon: diplodocus,
     color: lighten(0.2, textColor),
     size: 300,
     isOpen: false
   },
-  {id: 6, type: 'pterodactyl', icon: pterodactyl, color: cautionColor, size: 300, isOpen: false},
   {
-    id: 7,
+    id: uniqueId('card-'),
+    type: 'pterodactyl',
+    icon: pterodactyl,
+    color: cautionColor,
+    size: 300,
+    isOpen: false
+  },
+  {
+    id: uniqueId('card-'),
     type: 'gorgosaurus',
     icon: gorgosaurus,
     color: darken(0.2, attentionColor),
     size: 220,
     isOpen: false
   },
-  {id: 8, type: 'elasmosaurus', icon: elasmosaurus, size: 300, isOpen: false},
+  {id: uniqueId('card-'), type: 'elasmosaurus', icon: elasmosaurus, size: 300, isOpen: false},
   {
-    id: 9,
+    id: uniqueId('card-'),
     type: 'ankylosaurus',
     icon: ankylosaurus,
     color: lighten(0.3, successColor),
     size: 320,
     isOpen: false
   },
-  {id: 10, type: 'mammoth', icon: mammoth, color: '#964B00', size: 320, isOpen: false},
+  {
+    id: uniqueId('card-'),
+    type: 'mammoth',
+    icon: mammoth,
+    color: '#964B00',
+    size: 320,
+    isOpen: false
+  },
 
   {
-    id: 11,
+    id: uniqueId('card-'),
     type: 'velociraptor',
     icon: velociraptor,
     color: darken(0.2, thirdColor),
@@ -89,7 +112,7 @@ const initialState: ICard[] = [
     isOpen: false
   },
   {
-    id: 12,
+    id: uniqueId('card-'),
     type: 'triceratops',
     icon: triceratops,
     color: darken(0.1, successColor),
@@ -97,41 +120,62 @@ const initialState: ICard[] = [
     isOpen: false
   },
   {
-    id: 13,
+    id: uniqueId('card-'),
     type: 'stegosaurus',
     icon: stegosaurus,
     color: darken(0.2, fourthColor),
     size: 320,
     isOpen: false
   },
-  {id: 14, type: 'spinosaurus', icon: spinosaurus, color: errorColor, size: 300, isOpen: false},
   {
-    id: 15,
+    id: uniqueId('card-'),
+    type: 'spinosaurus',
+    icon: spinosaurus,
+    color: errorColor,
+    size: 300,
+    isOpen: false
+  },
+  {
+    id: uniqueId('card-'),
     type: 'diplodocus',
     icon: diplodocus,
     color: lighten(0.2, textColor),
     size: 300,
     isOpen: false
   },
-  {id: 16, type: 'pterodactyl', icon: pterodactyl, color: cautionColor, size: 300, isOpen: false},
   {
-    id: 17,
+    id: uniqueId('card-'),
+    type: 'pterodactyl',
+    icon: pterodactyl,
+    color: cautionColor,
+    size: 300,
+    isOpen: false
+  },
+  {
+    id: uniqueId('card-'),
     type: 'gorgosaurus',
     icon: gorgosaurus,
     color: darken(0.2, attentionColor),
     size: 220,
     isOpen: false
   },
-  {id: 18, type: 'elasmosaurus', icon: elasmosaurus, size: 300, isOpen: false},
+  {id: uniqueId('card-'), type: 'elasmosaurus', icon: elasmosaurus, size: 300, isOpen: false},
   {
-    id: 19,
+    id: uniqueId('card-'),
     type: 'ankylosaurus',
     icon: ankylosaurus,
     color: lighten(0.3, successColor),
     size: 320,
     isOpen: false
   },
-  {id: 20, type: 'mammoth', icon: mammoth, color: '#964B00', size: 320, isOpen: false}
+  {
+    id: uniqueId('card-'),
+    type: 'mammoth',
+    icon: mammoth,
+    color: '#964B00',
+    size: 320,
+    isOpen: false
+  }
 ];
 
 export const SET_CARDS = 'SET_CARDS';
@@ -153,7 +197,7 @@ export const setCards = (cards: ICard[]): AnyAction => {
   return {type: SET_CARDS, payload: {cards}};
 };
 
-export const updateCards = (cards: ICard[], id: number, isOpen: boolean): AnyAction => {
+export const updateCards = (cards: ICard[], id: string, isOpen: boolean): AnyAction => {
   const newCards: ICard[] = cards.map(card => {
     if (card.id === id) {
       return {...card, isOpen: isOpen};

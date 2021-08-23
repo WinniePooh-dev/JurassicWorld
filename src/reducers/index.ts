@@ -1,16 +1,26 @@
-import {combineReducers} from 'redux';
-import cards from './cards';
-import user from './user';
-import users from './users';
-import ui from './ui';
+import {AnyAction, CombinedState, combineReducers} from 'redux';
+import cards, {ICard} from './cards';
+import user, {User} from './user';
+import users, {RESET} from './users';
+import ui, {UI} from './ui';
 
-const rootReducer = combineReducers({
+type AnyState = CombinedState<{cards: ICard[]; user: User; users: User[]; ui: UI}> | undefined;
+
+const appReducer = combineReducers({
   cards,
   user,
   users,
   ui
 });
 
-export type RootState = ReturnType<typeof rootReducer>;
+const rootReducer = (state: AnyState, action: AnyAction): RootState => {
+  if (action.type === RESET) {
+    return appReducer(undefined, action);
+  }
+
+  return appReducer(state, action);
+};
+
+export type RootState = ReturnType<typeof appReducer>;
 
 export default rootReducer;

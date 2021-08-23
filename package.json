@@ -4,6 +4,7 @@
   "description": "Jurassic world",
   "main": "index.js",
   "author": "Roman Belotsvetov",
+  "homepage": "https://winniepooh-dev.github.io/JurassicWorld/",
   "license": "MIT",
   "scripts": {
     "build": "webpack --mode production",
@@ -13,7 +14,9 @@
     "typecheck": "tsc --noEmit",
     "linters": "yarn typecheck && yarn eslint",
     "test": "jest --passWithNoTests",
-    "lint": "eslint --ext .ts,.tsx src"
+    "lint": "eslint --ext .ts,.tsx src",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@material-ui/core": "^4.12.3",
@@ -26,6 +29,7 @@
     "npm": "^7.20.6",
     "polished": "^4.1.3",
     "react": "^17.0.2",
+    "react-animations": "^1.0.0",
     "react-dom": "^17.0.2",
     "react-final-form": "^6.5.3",
     "react-final-form-listeners": "^1.0.3",
@@ -55,6 +59,7 @@
     "@babel/preset-react": "^7.14.5",
     "@types/node": "^16.6.1",
     "@types/react": "^17.0.18",
+    "@types/react-animations": "^1.0.0",
     "@types/react-dom": "^17.0.9",
     "@types/react-final-form-listeners": "^1.0.0",
     "@types/react-router-dom": "^5.1.8",
@@ -77,6 +82,7 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.24.0",
     "file-loader": "^6.2.0",
+    "gh-pages": "^3.2.3",
     "html-webpack-plugin": "^5.3.2",
     "img-loader": "^4.0.0",
     "mini-css-extract-plugin": "^2.2.0",

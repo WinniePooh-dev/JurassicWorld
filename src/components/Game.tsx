@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import {Button, StyledCloseIcon, StyledDialog, StyledTypography} from '../@UI';
 import {Colors} from '../GlobalStyle';
 import {setTimer} from '../reducers/ui';
-import {setUsers} from '../reducers/users';
+import {RESET, setUsers} from '../reducers/users';
 import {selectCards} from '../selectors/cards';
 import {selectTimer} from '../selectors/ui';
 import {selectUser} from '../selectors/user';
@@ -37,7 +37,7 @@ const Game = (): JSX.Element => {
   useEffect(() => {
     if (!cards.length) {
       onStopGame();
-      handleOpen('You win!');
+      handleOpen('You won!');
     }
   }, [cards]);
 
@@ -53,13 +53,16 @@ const Game = (): JSX.Element => {
   }, [timer, startGame, stopGame]);
 
   useEffect(() => {
+    let timeout: NodeJS.Timeout;
     if (stopGame) {
       dispatch(setUsers([...users, {...user, ...{time: timer}}]));
-      setTimeout(() => {
+      timeout = setTimeout(() => {
         history.push('/user_form');
-        window.location.reload();
+        // window.location.reload();
+        dispatch({type: RESET});
       }, 3500);
     }
+    return () => clearTimeout(timeout);
   }, [stopGame, setStopGame]);
 
   const handleClose = () => {

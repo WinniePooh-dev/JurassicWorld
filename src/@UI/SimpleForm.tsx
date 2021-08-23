@@ -4,12 +4,11 @@ import styled from 'styled-components';
 
 interface Props {
   children: ReactNode;
-  position?: string;
   width: number | string;
   onSubmit: () => void;
 }
 
-const StyledForm = styled.form<{position?: string | undefined}>`
+const StyledForm = styled.form`
   display: flex;
   flex-direction: row;
   justify-content: center;

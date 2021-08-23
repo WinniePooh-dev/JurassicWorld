@@ -45,7 +45,7 @@ const StyledButton = styled.button<ButtonProps>`
   }
 `;
 
-const SmartiusButton = ({
+const JurassicButton = ({
   children,
   type = 'button',
   disabled,
@@ -58,4 +58,4 @@ const SmartiusButton = ({
   );
 };
 
-export default SmartiusButton;
+export default JurassicButton;

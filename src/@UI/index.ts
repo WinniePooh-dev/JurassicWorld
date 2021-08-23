@@ -16,6 +16,7 @@ export {default as Notification} from './Notification';
 export * from './Icon';
 export * from './StyledDialog';
 export * from './StyledCloseIcon';
+export * from './StyledDeleteIcon';
 
 export interface FieldProps {
   label?: string;

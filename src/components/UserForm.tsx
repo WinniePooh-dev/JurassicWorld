@@ -32,7 +32,11 @@ export const UserForm = (): JSX.Element => {
     try {
       dispatch(setLoading(true));
       dispatch(
-        setUser({...data, gender: (data.gender as unknown as HTMLInputElement).value as Gender})
+        setUser({
+          ...data,
+          id: new Date().getTime(),
+          gender: (data.gender as unknown as HTMLInputElement).value as Gender
+        })
       );
       setNotification({
         open: true,
@@ -43,7 +47,7 @@ export const UserForm = (): JSX.Element => {
       });
       setTimeout(() => history.replace('/game'), 3500);
     } catch (error) {
-      throw new Error(error);
+      throw new Error((error as Error).message);
     } finally {
       setTimeout(() => dispatch(setLoading(false)), 3500);
     }
@@ -52,7 +56,7 @@ export const UserForm = (): JSX.Element => {
   return (
     <Center>
       <StyledUserForm>
-        <StyledTypography variant={'h2'} component={'h2'} color={'secondary'}>
+        <StyledTypography align={'center'} variant={'h2'} component={'h2'} color={'secondary'}>
           Please fill out the form
         </StyledTypography>
         <FinalForm onSubmit={onSubmit} initialValues={{gender: options[0]}}>

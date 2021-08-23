@@ -6,6 +6,7 @@ export enum Gender {
 }
 
 export interface User {
+  id?: number;
   name: string;
   age: number;
   gender: Gender;
@@ -13,6 +14,7 @@ export interface User {
 }
 
 const initialState: User = {
+  id: 0,
   name: '',
   age: 0,
   gender: Gender.Male,

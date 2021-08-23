@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {selectCards, selectOpenedCards} from '../../selectors/cards';
 import {useMemo} from 'react';
 import {setLoading} from '../../reducers/ui';
+import {selectTimer} from '../../selectors/ui';
 
 export enum SideCard {
   Back = 'back',
@@ -15,7 +16,10 @@ export enum SideCard {
 
 export const Card = ({id, icon, color, size}: ICard): JSX.Element => {
   const dispatch = useDispatch();
+  const [success, setSucces] = useState(false);
+  const [failure, setFailure] = useState(false);
   const cards = useSelector(selectCards);
+  const timer = useSelector(selectTimer);
   const openedCards = useSelector(selectOpenedCards);
   const [side, setSide] = useState<SideCard>(SideCard.Back);
   const timeout = useRef<NodeJS.Timeout | null>(null);
@@ -26,11 +30,14 @@ export const Card = ({id, icon, color, size}: ICard): JSX.Element => {
     dispatch(setCards(filteredCards));
   }, [cards]);
 
-  const useTimeout = (func: () => void, delay: number) => {
+  const useTimeout = (func: () => void, delay: number, timer: NodeJS.Timeout): void => {
     dispatch(setLoading(true));
-    setTimeout(() => {
+    timeout.current = setTimeout(() => {
+      clearTimeout(timer);
       func();
       dispatch(setLoading(false));
+      setSucces(false);
+      setFailure(false);
     }, delay);
   };
 
@@ -50,35 +57,45 @@ export const Card = ({id, icon, color, size}: ICard): JSX.Element => {
   };
 
   useEffect(() => {
+    return () => clearTimeout(timeout.current as unknown as number);
+  }, []);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
     if (!openedCards.length) {
       setSide(SideCard.Back);
     } else if (openedCards.length === 2 && openedCards[0].type === openedCards[1].type) {
-      useTimeout(onFilterCards, 1500);
+      timer = setTimeout(() => setSucces(true), 600);
+      useTimeout(onFilterCards, 1500, timer);
     } else if (openedCards.length === 2 && openedCards[0].type !== openedCards[1].type) {
-      useTimeout(onPristinedCard, 1500);
+      timer = setTimeout(() => setFailure(true), 600);
+      useTimeout(onPristinedCard, 1500, timer);
     }
+    return () => clearTimeout(timer);
   }, [openedCards.length]);
 
   useEffect(() => {
+    let timer: NodeJS.Timeout;
     if (side === SideCard.Face) {
-      timeout.current = setTimeout(() => {
+      timer = setTimeout(() => {
+        clearTimeout(timeout.current as unknown as number);
         setSide(SideCard.Back);
         dispatch(updateCards(cards, id, false));
       }, 5000);
     }
-    return () => clearTimeout(timeout.current as unknown as number);
+    return () => clearTimeout(timer);
   }, [side, setSide]);
 
   if (side === SideCard.Back) {
     return (
-      <StyledCard side={side} onClick={onChangeSide}>
+      <StyledCard side={side} onClick={onChangeSide} disabled={!timer}>
         <Icon svg={jurassicWorld} width={300} />
       </StyledCard>
     );
   }
 
   return (
-    <StyledCard side={side}>
+    <StyledCard side={side} success={success} failure={failure}>
       <Icon svg={icon} width={size} color={color} />
     </StyledCard>
   );

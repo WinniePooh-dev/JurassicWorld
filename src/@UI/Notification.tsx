@@ -16,7 +16,7 @@ interface Props extends INotification {
   onClose: () => void;
 }
 
-interface SmartiusAlertProps extends Props {
+interface JurassicAlertProps extends Props {
   children: ReactNode | string;
 }
 
@@ -77,7 +77,7 @@ const Notification = ({
   );
 };
 
-export const Alert = ({onClose, severity = 'info', ...props}: SmartiusAlertProps): JSX.Element => {
+export const Alert = ({onClose, severity = 'info', ...props}: JurassicAlertProps): JSX.Element => {
   return (
     <StyledAlert onClose={onClose} severity={severity} variant="filled" {...props}>
       {props.children}
